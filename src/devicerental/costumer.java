@@ -7,20 +7,21 @@ import java.util.Scanner;
 
 public class costumer {
     public void Costumer(){
-        Scanner sc = new Scanner(System.in);
+        config conf = new config();
         
         boolean isSelected = false;
         
         do{
+            viewCostumer();
+                            
             System.out.println("\nCostumer:");
             System.out.println("1. Add Costumer");
             System.out.println("2. Edit Costumer");
             System.out.println("3. Remove Costumer");
-            System.out.println("4. View Costumer");
-            System.out.println("5. Select Costumer");
-            System.out.println("6. Exit");
+            System.out.println("4. Select Costumer");
+            System.out.println("5. Exit");
             System.out.print("Enter option: ");
-            int option = sc.nextInt();
+            int option = conf.validateInt();
 
             switch(option){
                 case 1:
@@ -33,12 +34,9 @@ public class costumer {
                     removeCostumer();
                     break;
                 case 4:
-                    viewCostumer();
-                    break;
-                case 5:
                     viewIndivReport();
                     break;
-                case 6:
+                case 5:
                     isSelected = true;
                     break;
                 default: 
@@ -72,11 +70,11 @@ public class costumer {
         config conf = new config();
         
         System.out.print("Enter costumer id to update: ");
-        int cid = sc.nextInt();
+        int cid = conf.validateInt();
         
         while(conf.getSingleValue("SELECT c_id FROM costumer WHERE c_id = ?", cid) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            cid = sc.nextInt();
+            cid = conf.validateInt();
         }
         
         System.out.print("New Costumer Name: ");
@@ -101,11 +99,11 @@ public class costumer {
         config conf = new config();
         
         System.out.print("Enter costumer id to remove: ");
-        int cid = sc.nextInt();
+        int cid = conf.validateInt();
         
         while(conf.getSingleValue("SELECT c_id FROM costumer WHERE c_id = ?", cid) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            cid = sc.nextInt();
+            cid = conf.validateInt();
         }
         
         String sqlDelete = "DELETE FROM costumer WHERE c_id = ?";
@@ -129,11 +127,11 @@ public class costumer {
         config conf = new config();
         
         System.out.print("Enter Costumer ID: ");
-        int cid = sc.nextInt();
+        int cid = conf.validateInt();
         
         while(conf.getSingleValue("SELECT c_id FROM costumer WHERE c_id = ?", cid) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            cid = sc.nextInt();
+            cid = conf.validateInt();
         }
         
         try{

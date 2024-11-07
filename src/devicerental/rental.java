@@ -8,20 +8,21 @@ import java.time.LocalDate;
 
 public class rental {
     public void Rental(){
-        Scanner sc = new Scanner(System.in);
+        config conf = new config();
         
         boolean isSelected = false;
         
         do{
+            viewRent();
+            
             System.out.println("\nRental:");
             System.out.println("1. Add Rent");
             System.out.println("2. Edit Rent");
             System.out.println("3. Remove Rent");
-            System.out.println("4. View Rent");
-            System.out.println("5. Select Rent");
-            System.out.println("6. Exit");
+            System.out.println("4. Select Rent");
+            System.out.println("5. Exit");
             System.out.print("Enter option: ");
-            int option = sc.nextInt();
+            int option = conf.validateInt();
 
             switch(option){
                 case 1:
@@ -34,12 +35,9 @@ public class rental {
                     removeRent();
                     break;
                 case 4:
-                    viewRent();
-                    break;
-                case 5:
                     viewIndivReport();
                     break;
-                case 6:
+                case 5:
                     isSelected = true;
                     break;
                 default: 
@@ -54,19 +52,19 @@ public class rental {
         config conf = new config();
         
         System.out.print("Select costumer id: ");
-        int cid = sc.nextInt();
+        int cid = conf.validateInt();
         
         while(conf.getSingleValue("SELECT c_id FROM costumer WHERE c_id = ?", cid) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            cid = sc.nextInt();
+            cid = conf.validateInt();
         }
         
         System.out.print("Enter device ID to rent: ");
-        int did = sc.nextInt();
+        int did = conf.validateInt();
         
         while(conf.getSingleValue("SELECT d_id FROM device WHERE d_id = ?", did) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            did = sc.nextInt();
+            did = conf.validateInt();
         }
         
         System.out.print("Enter Due Date (format: yyyy-mm-dd): ");
@@ -86,11 +84,11 @@ public class rental {
         config conf = new config();
         
         System.out.print("Enter rent ID to edit: ");
-        int rid = sc.nextInt();
+        int rid = conf.validateInt();
         
         while(conf.getSingleValue("SELECT r_id FROM rental WHERE r_id = ?", rid) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            rid = sc.nextInt();
+            rid = conf.validateInt();
         }
         
         System.out.print("Enter New Due Date (format: yyyy-mm-dd): ");
@@ -110,11 +108,11 @@ public class rental {
         config conf = new config();
         
         System.out.print("Enter rent ID to remove: ");
-        int rid = sc.nextInt();
+        int rid = conf.validateInt();
         
         while(conf.getSingleValue("SELECT r_id FROM rental WHERE r_id = ?", rid) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            rid = sc.nextInt();
+            rid = conf.validateInt();
         }
         
         String sqlDelete = "DELETE FROM rental WHERE r_id = ?";
@@ -140,11 +138,11 @@ public class rental {
         config conf = new config();
         
         System.out.print("Enter Rent ID: ");
-        int rid = sc.nextInt();
+        int rid = conf.validateInt();
         
         while(conf.getSingleValue("SELECT r_id FROM rental WHERE r_id = ?", rid) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            rid = sc.nextInt();
+            rid = conf.validateInt();
         }
         
         try{

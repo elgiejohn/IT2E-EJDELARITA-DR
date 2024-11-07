@@ -7,20 +7,21 @@ import java.util.Scanner;
 
 public class device {
     public void Device(){
-        Scanner sc = new Scanner(System.in);
+        config conf = new config();
         
         boolean isSelected = false;
         
         do{
+            viewDevice();
+            
             System.out.println("\nDevice:");
             System.out.println("1. Add Device");
             System.out.println("2. Edit Device");
             System.out.println("3. Remove Device");
-            System.out.println("4. View Device");
-            System.out.println("5. Select Device");
-            System.out.println("6. Exit");
+            System.out.println("4. Select Device");
+            System.out.println("5. Exit");
             System.out.print("Enter option: ");
-            int option = sc.nextInt();
+            int option = conf.validateInt();
 
             switch(option){
                 case 1:
@@ -33,12 +34,9 @@ public class device {
                     removeDevice();
                     break;
                 case 4:
-                    viewDevice();
-                    break;
-                case 5:
                     viewIndivReport();
                     break;
-                case 6:
+                case 5:
                     isSelected = true;
                     break;
                 default: 
@@ -58,7 +56,7 @@ public class device {
         String dtype = sc.nextLine();
         
         System.out.print("Price: ");
-        double price = sc.nextDouble();
+        double price = conf.validateDouble();
 
         String sql = "INSERT INTO device (d_name, d_type, d_price) VALUES (?, ?, ?)";
 
@@ -70,11 +68,11 @@ public class device {
         config conf = new config();
         
         System.out.print("Enter device ID to edit: ");
-        int did = sc.nextInt();
+        int did = conf.validateInt();
         
         while(conf.getSingleValue("SELECT d_id FROM device WHERE d_id = ?", did) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            did = sc.nextInt();
+            did = conf.validateInt();
         }
         
         System.out.print("New Device Name: ");
@@ -85,7 +83,7 @@ public class device {
         String newType = sc.nextLine();
         
         System.out.print("New Price: ");
-        double newPrice = sc.nextDouble();
+        double newPrice = conf.validateDouble();
         
         String sqlUpdate = "UPDATE device SET d_name = ?, d_type = ?, d_price = ? WHERE d_id = ?";
 
@@ -97,11 +95,11 @@ public class device {
         config conf = new config();
         
         System.out.print("Enter device ID to delete: ");
-        int did = sc.nextInt();
+        int did = conf.validateInt();
         
         while(conf.getSingleValue("SELECT d_id FROM device WHERE d_id = ?", did) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            did = sc.nextInt();
+            did = conf.validateInt();
         }
         
         String sqlDelete = "DELETE FROM device WHERE d_id = ?";
@@ -125,11 +123,11 @@ public class device {
         config conf = new config();
         
         System.out.print("Enter Device ID: ");
-        int did = sc.nextInt();
+        int did = conf.validateInt();
         
         while(conf.getSingleValue("SELECT d_id FROM device WHERE d_id = ?", did) == 0){
             System.out.print("ID doesn't exist, try again: ");
-            did = sc.nextInt();
+            did = conf.validateInt();
         }
         
         try{

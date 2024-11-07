@@ -12,6 +12,7 @@ public class main {
         costumer c = new costumer();
         device d = new device();
         rental r = new rental();
+        config conf = new config();
         
         boolean isSelected = false;
         
@@ -23,7 +24,7 @@ public class main {
             System.out.println("4. View Rent History");
             System.out.println("5. Exit");
             System.out.print("Enter option: ");
-            int option = sc.nextInt();
+            int option = conf.validateInt();
 
             switch(option){
                 case 1:
@@ -39,7 +40,11 @@ public class main {
                     showRentHistory();
                     break;
                 case 5:
-                    isSelected = true;
+                    System.out.print("Confirm exit? (yes/no): ");
+                    String confirm = sc.next();
+                    
+                    if(confirm.contains("y"))
+                        System.exit(0);
                     break;
                 default:
                     System.out.println("Error, invalid option");
@@ -59,8 +64,10 @@ public class main {
             cid = sc.nextInt();
         }
         
-        String rentalQuery = "SELECT rental.r_id, c.c_name, d.d_name, rental.r_duration, r_rent_date, r_payment_status FROM rental "
-                + "INNER JOIN costumer c ON rental.c_id = c.c_id INNER JOIN device d ON rental.d_id = d.d_id WHERE rental.c_id = ?";
+        String rentalQuery = "SELECT rental.r_id, c.c_name, d.d_name, rental.r_due_date, r_rent_date, r_payment_status FROM rental "
+                + "INNER JOIN costumer c ON rental.c_id = c.c_id "
+                + "INNER JOIN device d ON rental.d_id = d.d_id "
+                + "WHERE rental.c_id = ?";
         
         try{
             PreparedStatement findRow = conf.connectDB().prepareStatement(rentalQuery);
@@ -78,8 +85,8 @@ public class main {
             System.out.println("Error: "+e.getMessage());
         }
         
-        String[] rentalHeaders = {"ID", "Costumer", "Device", "Duration", "Date Rented", "Payment Status"};
-        String[] rentalColumns = {"r_id", "c_name", "d_name", "r_duration", "r_rent_date", "r_payment_status"};
+        String[] rentalHeaders = {"ID", "Costumer", "Device", "Due Date", "Date Rented", "Payment Status"};
+        String[] rentalColumns = {"r_id", "c_name", "d_name", "r_due_date", "r_rent_date", "r_payment_status"};
         String[] whereValues = {String.valueOf(cid)};
 
         conf.viewRecords(rentalQuery, rentalHeaders, rentalColumns, whereValues);

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class config {
     
@@ -209,5 +211,37 @@ public class config {
         return result;
     }
     
+    public int validateInt() {
+        Scanner sc = new Scanner(System.in);
+        
+        int getNum;
+        
+        while(true) {
+            try {
+                    getNum = sc.nextInt();
+                    break;
+            } catch(InputMismatchException e) {
+                System.out.print("Invalid Input: Must only be a number, try again: ");
+                sc.next();
+            }
+        }
+        return getNum;
+    }
     
+    public double validateDouble() {
+        Scanner sc = new Scanner(System.in);
+        
+        double getNum;
+        
+        while(true) {
+            try {
+                    getNum = sc.nextDouble();
+                    break;
+            } catch(InputMismatchException e) {
+                System.out.print("Invalid Input: Must only be a number, try again: ");
+                sc.next();
+            }
+        }
+        return getNum;
+    }
 }
