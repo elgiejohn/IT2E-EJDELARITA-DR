@@ -14,6 +14,10 @@ public class rentals {
         Scanner sc = new Scanner(System.in);
         config conf = new config();
         
+        customers c = new customers();
+        devices d = new devices();
+        
+        c.viewCostumer();
         System.out.print("Select costumer id: ");
         int cid = conf.validateInt();
         
@@ -22,6 +26,7 @@ public class rentals {
             cid = conf.validateInt();
         }
         
+        d.viewDevice();
         System.out.print("Enter device ID to rent: ");
         int did = conf.validateInt();
         
@@ -39,6 +44,7 @@ public class rentals {
         String sql = "INSERT INTO rental (c_id, d_id, r_due_date, r_rent_date, r_payment_status) VALUES (?, ?, ?, ?, ?)";
 
         conf.addRecord(sql, cid, did, due_date, date.toString(), status);
+        conf.updateRecord("UPDATE device SET d_status = 'Unavailable' WHERE d_id = ?", did);
     }
     
     public void editRent(){
@@ -129,6 +135,7 @@ public class rentals {
                 System.out.println("Due Date: "+rentDuration);
                 System.out.println("--------------------------------");
                 System.out.println("Payment Status: "+rentStatus);
+                result.close();
             }
         } catch(SQLException e){
             System.out.println("Error: "+e.getMessage());

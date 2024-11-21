@@ -40,6 +40,7 @@ public class history {
             System.out.println("\nSelected ID: "+renterID);
             System.out.println("Renter Name: "+renterName);
             System.out.println("Rent history:");
+            result.close();
         } catch(SQLException e){
             System.out.println("Error: "+e.getMessage());
         }

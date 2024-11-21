@@ -39,7 +39,6 @@ public class devices {
         }
         
         System.out.print("New Device Name: ");
-        sc.nextLine();
         String newName = sc.nextLine();
         
         System.out.print("New Device Type: ");
@@ -48,9 +47,12 @@ public class devices {
         System.out.print("New Price: ");
         double newPrice = conf.validateDouble();
         
-        String sqlUpdate = "UPDATE device SET d_name = ?, d_type = ?, d_price = ? WHERE d_id = ?";
+        System.out.print("New Status: ");
+        String newStatus = sc.nextLine();
+        
+        String sqlUpdate = "UPDATE device SET d_name = ?, d_type = ?, d_price = ?, d_status = ? WHERE d_id = ?";
 
-        conf.updateRecord(sqlUpdate, newName, newType, newPrice, did);
+        conf.updateRecord(sqlUpdate, newName, newType, newPrice, newStatus, did);
     }
     
     public void removeDevice(){
@@ -73,8 +75,8 @@ public class devices {
         config conf = new config();
         
         String deviceQuery = "SELECT * FROM device";
-        String[] deviceHeaders = {"ID", "Name", "Type", "Price"};
-        String[] deviceColumns = {"d_id", "d_name", "d_type", "d_price"};
+        String[] deviceHeaders = {"ID", "Name", "Type", "Price", "Status"};
+        String[] deviceColumns = {"d_id", "d_name", "d_type", "d_price", "d_status"};
         String[] whereValues = null;
 
         conf.viewRecords(deviceQuery, deviceHeaders, deviceColumns, whereValues);
@@ -100,11 +102,13 @@ public class devices {
                 int deviceID = result.getInt("d_id");
                 String deviceType = result.getString("d_type");
                 double devicePrice = result.getDouble("d_price");
+                String deviceStatus = result.getString("d_status");
                 
                 System.out.println("\nSelected ID: "+deviceID);
                 System.out.println("Name: "+deviceName);
                 System.out.println("Type: "+deviceType);
                 System.out.println("Price: "+devicePrice);
+                System.out.println("Status: "+deviceStatus);
             }
         } catch(SQLException e){
             System.out.println("Error: "+e.getMessage());
